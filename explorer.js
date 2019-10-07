@@ -1,5 +1,4 @@
 function onLoad() {
-    var inputArea = document.getElementById("inputArea");
     var outputArea = document.getElementById("outputArea");
     var commandLine = document.getElementById("commandLine");
     var runHermes = document.getElementById("runHermes");
@@ -45,7 +44,7 @@ function onLoad() {
         console.log(ellapsed(), "run requested");
         if (runRequested)
             return;
-        outputArea.innerHTML = "Running...";
+        outputArea.innerText = "Running...";
         runCommandLine = commandLine.value;
         runRequested = 1;
 
@@ -60,7 +59,7 @@ function onLoad() {
         var args = commandLine.value.split(/\s+/);
 
         var fileName = "/tmp/hermes-input.js";
-        app.FS.writeFile(fileName, inputArea.value);
+        app.FS.writeFile(fileName, editor.getValue());
 
         args.push("--pretty-json");
         args.push(fileName);
@@ -69,10 +68,7 @@ function onLoad() {
         console.log(ellapsed(), "hermes done");
 
         // Delete all child nodes.
-        outputArea.innerHTML = "";
-        var pre = document.createElement("pre");
-        pre.innerText = output;
-        outputArea.appendChild(pre);
+        outputArea.innerText = output;
 
         output = "";
         runRequested = 0;

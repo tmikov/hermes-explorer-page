@@ -1,0 +1,10 @@
+#!/bin/bash
+
+FLAGS=""
+FLAGS="$FLAGS -s WASM=0"
+FLAGS="$FLAGS -s MODULARIZE=1 -s EXPORT_NAME=createApp"
+FLAGS="$FLAGS -s INVOKE_RUN=0"
+FLAGS="$FLAGS -s EXIT_RUNTIME=1"
+FLAGS="$FLAGS -s EXTRA_EXPORTED_RUNTIME_METHODS=[callMain,FS]"
+
+emcc -g4 hello.cpp $FLAGS -o hello

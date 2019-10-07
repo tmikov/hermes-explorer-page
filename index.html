@@ -1,6 +1,12 @@
-<html>
+<html lang="en-US">
 <head>
     <title>Hermes Compiler Explorer</title>
+    <script src="lib/codemirror.js"></script>
+    <link rel="stylesheet" href="lib/codemirror.css">
+    <script src="addon/edit/matchbrackets.js"></script>
+    <script src="addon/comment/continuecomment.js"></script>
+    <script src="addon/comment/comment.js"></script>
+    <script src="mode/javascript/javascript.js"></script>
     <script src="hermes.js"></script>
     <script src="explorer.js"></script>
     <style>
@@ -16,13 +22,33 @@
             text-align: left;
             padding: 8px;
         }
+
+        #inputArea {
+            width: 100%;
+            height: 100%;
+            white-space: nowrap;
+        }
+
+        .output {
+            font-family: monospace;
+            overflow-y: scroll;
+            white-space: pre-wrap;
+            width: 100%;
+            height: 100%;
+        }
+
+        .CodeMirror {
+            width: 100%;
+            height: 100%;
+            white-space: nowrap;
+        }
     </style>
 </head>
 <body onload="onLoad()">
 <h1>Hermes Compiler Explorer</h1>
 <p>See
-<a href="https://hermesengine.dev/">https://hermesengine.dev/</a> and
-<a href="https://github.com/facebook/hermes">https://github.com/facebook/hermes</a><br/>
+    <a href="https://hermesengine.dev/">https://hermesengine.dev/</a> and
+    <a href="https://github.com/facebook/hermes">https://github.com/facebook/hermes</a><br/>
 </p>
 
 <table>
@@ -40,16 +66,24 @@
         </td>
     </tr>
     <tr>
-        <td style="width:30%">
+        <td style="width:40%;">
             <label>
-                <textarea id="inputArea" style="width: 100%; height: 100%;">print("hello");</textarea>
+                <textarea id="inputArea">print("hello");</textarea>
             </label>
         </td>
-        <td style="width:70%">
-            <div id="outputArea" style="width: 100%; height: 100%; font-family: monospace; overflow: scroll"></div>
+        <td style="width:60%">
+            <div id="outputArea" class="output"></div>
         </td>
     </tr>
 </table>
+<script>
+    var editor = CodeMirror.fromTextArea(document.getElementById("inputArea"), {
+        lineNumbers: true,
+        matchBrackets: true,
+        continueComments: "Enter",
+        extraKeys: {"Ctrl-Q": "toggleComment"}
+    });
+</script>
 
 </body>
 </html>
